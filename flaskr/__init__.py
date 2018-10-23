@@ -26,6 +26,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    def makeResponse(payload):
+        data = {}
+        data['Data'] = payload
+        return json.dumps(data)
+
     # a simple page that says hello
     @app.route('/hello')
     def hello():
@@ -35,8 +40,6 @@ def create_app(test_config=None):
         for p in players.rushing().sort('rushing_yds').limit(5):
             msg = '%s %d carries for %d yards and %d TDs'
             retval.append(msg % (p, p.rushing_att, p.rushing_yds, p.rushing_tds))
-            # print msg % (p, p.rushing_att, p.rushing_yds, p.rushing_tds)
-        # return 'Hello, World!'
-        return json.dumps(retval)
-
+        return makeResponse(retval)
+        
     return app
