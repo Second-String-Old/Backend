@@ -37,7 +37,7 @@ def create_app(test_config=None):
         games = nflgame.games(2018, week=5)
         players = nflgame.combine_game_stats(games)
         testPL = []
-        for p in players.rushing().sort('rushing_yds').limit(5):
+        for p in players.rushing().sort('rushing_yds').limit(25):
             msg = '%s %d carries for %d yards and %d TDs'
             testPL.append(msg % (p, p.rushing_att, p.rushing_yds, p.rushing_tds))
         return makeResponse(testPL)
