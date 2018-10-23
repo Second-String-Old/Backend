@@ -31,15 +31,15 @@ def create_app(test_config=None):
         data['Data'] = payload
         return json.dumps(data)
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
+    # a simple response that returns top 5 rushing yards
+    @app.route('/players/test')
+    def test():
         games = nflgame.games(2018, week=5)
         players = nflgame.combine_game_stats(games)
-        retval = []
+        testPL = []
         for p in players.rushing().sort('rushing_yds').limit(5):
             msg = '%s %d carries for %d yards and %d TDs'
-            retval.append(msg % (p, p.rushing_att, p.rushing_yds, p.rushing_tds))
-        return makeResponse(retval)
-        
+            testPL.append(msg % (p, p.rushing_att, p.rushing_yds, p.rushing_tds))
+        return makeResponse(testPL)
+
     return app
