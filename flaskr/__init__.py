@@ -32,7 +32,7 @@ def create_app(test_config=None):
         return json.dumps(data)
 
     # a simple response that returns top 5 rushing yards
-    @app.route('/players/test')
+    @app.route('/players/test/')
     def test():
         games = nflgame.games(2018, week=5)
         players = nflgame.combine_game_stats(games)
@@ -42,4 +42,23 @@ def create_app(test_config=None):
             testPL.append(msg % (p, p.rushing_att, p.rushing_yds, p.rushing_tds))
         return makeResponse(testPL)
 
+    passing_attrs = ['passing_cmp', 'passing_att', 'passing_tds', 'passing_yds', 'passing_int', 'passing_sk']
+
+    @app.route('/players/QB/')
+    def qb():
+        games = nflgame.games(2018, week=1)
+        players = nflgame.combine_game_stats(games)
+        qbPL = []
+        for p in players.passing().sort('passing_yds').limit(25):
+            player = {}
+            player['player_name'] = p.name
+            player['player_team'] = p.team
+            player['passing_cmp'] = p.passing_cmp
+            player['passing_att'] = p.passing_att
+            player['passing_tds'] = p.passing_tds
+            player['passing_yds'] = p.passing_yds
+            player['passing_int'] = p.passing_int
+            player['passing_sk'] = p.passing_sk
+            qbPL.append(player)
+        return makeResponse(qbPL)
     return app
