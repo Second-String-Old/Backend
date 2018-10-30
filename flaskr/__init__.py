@@ -3,7 +3,7 @@ import nflgame
 import json
 
 from flask import Flask
-
+from flask import request
 
 def create_app(test_config=None):
     # create and configure the app
@@ -44,12 +44,20 @@ def create_app(test_config=None):
 
     passing_attrs = ['passing_cmp', 'passing_att', 'passing_tds', 'passing_yds', 'passing_int', 'passing_sk']
 
+    # /players/QB/?count={count}&year={year}&week={week}
     @app.route('/players/QB/')
     def qb():
-        games = nflgame.games(2018, week=1)
+        count = int(request.args.get('count'))
+        year = int(request.args.get('year'))
+        week = int(request.args.get('week'))
+        if count is None:
+            count = 25
+        if year is None:
+            year = 2018
+        games = nflgame.games(year, week=week)
         players = nflgame.combine_game_stats(games)
         qbPL = []
-        for p in players.passing().sort('passing_yds').limit(25):
+        for p in players.passing().sort('passing_yds').limit(count):
             player = {}
             player['player_name'] = p.name
             player['player_team'] = p.team
