@@ -56,7 +56,7 @@ def create_app(test_config=None):
             year = 2018
         games = nflgame.games(year, week=week)
         players = nflgame.combine_game_stats(games)
-        qbPL = []
+        playerList = []
         for p in players.passing().sort('passing_yds').limit(count):
             player = {}
             player['player_name'] = p.name
@@ -69,8 +69,8 @@ def create_app(test_config=None):
             player['passing_sk'] = p.passing_sk
             player['russing_att'] = p.rushing_att
             player['rushing_yds'] = p.rushing_yds
-            qbPL.append(player)
-        return makeResponse(qbPL)
+            playerList.append(player)
+        return makeResponse(playerList)
 
     # /players/WR/?count={count}&year={year}&week={week}
     @app.route('/players/WR/')
@@ -84,7 +84,7 @@ def create_app(test_config=None):
             year = 2018
         games = nflgame.games(year, week=week)
         players = nflgame.combine_game_stats(games)
-        wrPL = []
+        playerList = []
         for p in players.receiving().sort('receiving_yds').limit(count):
             player = {}
             player['player_name'] = p.name
@@ -95,6 +95,6 @@ def create_app(test_config=None):
             player['receiving_yds'] = p.receiving_yds
             player['russing_att'] = p.rushing_att
             player['rushing_yds'] = p.rushing_yds
-            wrPL.append(player)
-        return makeResponse(wrPL)
+            playerList.append(player)
+        return makeResponse(playerList)
     return app
