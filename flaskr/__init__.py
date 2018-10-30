@@ -47,17 +47,19 @@ def create_app(test_config=None):
     # /players/QB/?count={count}&year={year}&week={week}
     @app.route('/players/QB/')
     def qb():
-        count = int(request.args.get('count'))
-        year = int(request.args.get('year'))
-        week = int(request.args.get('week'))
+        count = request.args.get('count')
+        year = request.args.get('year')
+        week = request.args.get('week')
         if count is None:
             count = 25
         if year is None:
             year = 2018
-        games = nflgame.games(year, week=week)
+        if week is not None:
+            week = int(week)
+        games = nflgame.games(int(year), week=week)
         players = nflgame.combine_game_stats(games)
         playerList = []
-        for p in players.passing().sort('passing_yds').limit(count):
+        for p in players.passing().sort('passing_yds').limit(int(count)):
             player = {}
             player['player_name'] = p.name
             player['player_team'] = p.team
@@ -75,17 +77,20 @@ def create_app(test_config=None):
     # /players/WR/?count={count}&year={year}&week={week}
     @app.route('/players/WR/')
     def wr():
-        count = int(request.args.get('count'))
-        year = int(request.args.get('year'))
-        week = int(request.args.get('week'))
+        count = request.args.get('count')
+        year = request.args.get('year')
+        week = request.args.get('week')
         if count is None:
             count = 25
         if year is None:
             year = 2018
-        games = nflgame.games(year, week=week)
+        if week is not None:
+            week = int(week)
+        print(count, year, week)
+        games = nflgame.games(int(year), week=week)
         players = nflgame.combine_game_stats(games)
         playerList = []
-        for p in players.receiving().sort('receiving_yds').limit(count):
+        for p in players.receiving().sort('receiving_yds').limit(int(count)):
             player = {}
             player['player_name'] = p.name
             player['player_team'] = p.team
