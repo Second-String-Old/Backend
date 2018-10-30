@@ -59,6 +59,8 @@ def create_app(test_config=None):
             player['passing_yds'] = p.passing_yds
             player['passing_int'] = p.passing_int
             player['passing_sk'] = p.passing_sk
+            player['russing_att'] = p.rushing_att
+            player['rushing_yds'] = p.rushing_yds
             qbPL.append(player)
         return makeResponse(qbPL)
     return app
