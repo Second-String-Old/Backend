@@ -71,4 +71,30 @@ def create_app(test_config=None):
             player['rushing_yds'] = p.rushing_yds
             qbPL.append(player)
         return makeResponse(qbPL)
+
+    # /players/WR/?count={count}&year={year}&week={week}
+    @app.route('/players/WR/')
+    def wr():
+        count = int(request.args.get('count'))
+        year = int(request.args.get('year'))
+        week = int(request.args.get('week'))
+        if count is None:
+            count = 25
+        if year is None:
+            year = 2018
+        games = nflgame.games(year, week=week)
+        players = nflgame.combine_game_stats(games)
+        wrPL = []
+        for p in players.receiving().sort('receiving_yds').limit(count):
+            player = {}
+            player['player_name'] = p.name
+            player['player_team'] = p.team
+            player['receiving_rec'] = p.receiving_rec
+            player['receiving_tar'] = p.receiving_tar
+            player['receiving_tds'] = p.receiving_tds
+            player['receiving_yds'] = p.receiving_yds
+            player['russing_att'] = p.rushing_att
+            player['rushing_yds'] = p.rushing_yds
+            wrPL.append(player)
+        return makeResponse(wrPL)
     return app
