@@ -1,1 +1,1 @@
-web: python app:create-app
+web: python app
