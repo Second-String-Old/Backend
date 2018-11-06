@@ -91,6 +91,7 @@ def create_app(test_config=None):
         players = nflgame.combine_game_stats(games)
         playerList = []
         for p in players.receiving().sort('receiving_yds').limit(int(count)):
+            print(p.guess_position)
             player = {}
             player['player_name'] = p.name
             player['player_team'] = p.team
