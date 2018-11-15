@@ -58,6 +58,7 @@ def qb():
     if week is not None:
         week = int(week)
     games = nflgame.games(int(year), week=week)
+    print(games)
     players = nflgame.combine_game_stats(games)
     playerList = []
     for p in players.passing().sort('passing_yds').limit(int(count)):
