@@ -1,6 +1,7 @@
 import os
 import nflgame
 import json
+import datetime
 
 from flask import Flask
 from flask import request
@@ -48,6 +49,7 @@ passing_attrs = ['passing_cmp', 'passing_att', 'passing_tds', 'passing_yds', 'pa
 # /players/QB/?count={count}&year={year}&week={week}
 @app.route('/players/QB/')
 def qb():
+    print(datetime.datetime.now())
     count = request.args.get('count')
     year = request.args.get('year')
     week = request.args.get('week')
@@ -57,7 +59,7 @@ def qb():
         year = 2018
     if week is not None:
         week = int(week)
-    games = nflgame.games(int(year), week=week)
+    games = nflgame.games(int(year), week=1)
     players = nflgame.combine_game_stats(games)
     playerList = []
     for p in players.passing().sort('passing_yds').limit(int(count)):
@@ -73,6 +75,7 @@ def qb():
         player['russing_att'] = p.rushing_att
         player['rushing_yds'] = p.rushing_yds
         playerList.append(player)
+    print(datetime.datetime.now())
     return makeResponse(playerList)
 
 # /players/WR/?count={count}&year={year}&week={week}
