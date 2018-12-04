@@ -122,7 +122,7 @@ def wr():
     players = nflgame.combine_game_stats(games)
     playerList = []
     for p in players.receiving().sort('receiving_yds').limit(int(count)):
-        print(p.guess_position)
+        # print(p.guess_position)
         player = addStats({}, p, 'WR')
         playerList.append(player)
     return makeResponse(playerList)
@@ -147,6 +147,26 @@ def rb():
         player = addStats({}, p, 'RB')
         playerList.append(player)
     return makeResponse(playerList)
+
+# /players/?&name={name}&team{team}&year={year}&week={week}
+@app.route('/players/')
+def player():
+    year = request.args.get('year')
+    week = request.args.get('week')
+    name = request.args.get('name')
+    team = request.args.get('team')
+    if year is None:
+        year = 2018
+    if week is not None:
+        week = int(week)
+    games = nflgame.games(int(year), week=week)
+    players = nflgame.combine_game_stats(games)
+    player = nflgame.find(name, team=team)[0]
+
+    for x in players:
+        if x.name == player.gsis_name:
+            p = addStats(player.__dict__, x, player.position)
+    return makeResponse([p])
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
