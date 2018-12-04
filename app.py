@@ -2,6 +2,7 @@ import os
 import nflgame
 import json
 import datetime
+import itertools
 
 from flask import Flask
 from flask import request
@@ -33,6 +34,42 @@ def makeResponse(payload):
     data['Data'] = payload
     return json.dumps(data)
 
+# Function for adding stats to a dictionary to keep code nice and clean
+# This will have dual use as it will make adding the individual routes way easier/cleaner
+def addStats(dict, stats, pos):
+    if pos == 'QB':
+        dict['player_name'] = stats.name
+        dict['player_team'] = stats.team
+        dict['passing_cmp'] = stats.passing_cmp
+        dict['passing_att'] = stats.passing_att
+        dict['passing_tds'] = stats.passing_tds
+        dict['passing_yds'] = stats.passing_yds
+        dict['passing_int'] = stats.passing_int
+        dict['passing_sk'] = stats.passing_sk
+        dict['russing_att'] = stats.rushing_att
+        dict['rushing_yds'] = stats.rushing_yds
+    elif pos == 'WR':
+        dict['player_name'] = stats.name
+        dict['player_team'] = stats.team
+        dict['receiving_rec'] = stats.receiving_rec
+        dict['receiving_tar'] = stats.receiving_tar
+        dict['receiving_tds'] = stats.receiving_tds
+        dict['receiving_yds'] = stats.receiving_yds
+        dict['russing_att'] = stats.rushing_att
+        dict['rushing_yds'] = stats.rushing_yds
+    elif pos == 'RB':
+        dict['player_name'] = stats.name
+        dict['player_team'] = stats.team
+        dict['receiving_rec'] = stats.receiving_rec
+        dict['receiving_tar'] = stats.receiving_tar
+        dict['receiving_tds'] = stats.receiving_tds
+        dict['receiving_yds'] = stats.receiving_yds
+        dict['russing_att'] = stats.rushing_att
+        dict['rushing_yds'] = stats.rushing_yds
+        dict['rushing_loss_yds'] = stats.rushing_loss_yds
+        dict['rushing_tds'] = stats.rushing_tds
+    return dict
+
 # a simple response that returns top 5 rushing yards
 @app.route('/players/test/')
 def test():
@@ -63,17 +100,7 @@ def qb():
     players = nflgame.combine_game_stats(games)
     playerList = []
     for p in players.passing().sort('passing_yds').limit(int(count)):
-        player = {}
-        player['player_name'] = p.name
-        player['player_team'] = p.team
-        player['passing_cmp'] = p.passing_cmp
-        player['passing_att'] = p.passing_att
-        player['passing_tds'] = p.passing_tds
-        player['passing_yds'] = p.passing_yds
-        player['passing_int'] = p.passing_int
-        player['passing_sk'] = p.passing_sk
-        player['russing_att'] = p.rushing_att
-        player['rushing_yds'] = p.rushing_yds
+        player = addStats({}, p, 'QB')
         playerList.append(player)
     print(datetime.datetime.now())
     return makeResponse(playerList)
@@ -96,15 +123,7 @@ def wr():
     playerList = []
     for p in players.receiving().sort('receiving_yds').limit(int(count)):
         print(p.guess_position)
-        player = {}
-        player['player_name'] = p.name
-        player['player_team'] = p.team
-        player['receiving_rec'] = p.receiving_rec
-        player['receiving_tar'] = p.receiving_tar
-        player['receiving_tds'] = p.receiving_tds
-        player['receiving_yds'] = p.receiving_yds
-        player['russing_att'] = p.rushing_att
-        player['rushing_yds'] = p.rushing_yds
+        player = addStats({}, p, 'WR')
         playerList.append(player)
     return makeResponse(playerList)
 
@@ -125,17 +144,7 @@ def rb():
     players = nflgame.combine_game_stats(games)
     playerList = []
     for p in players.rushing().sort('rushing_yds').limit(int(count)):
-        player = {}
-        player['player_name'] = p.name
-        player['player_team'] = p.team
-        player['receiving_rec'] = p.receiving_rec
-        player['receiving_tar'] = p.receiving_tar
-        player['receiving_tds'] = p.receiving_tds
-        player['receiving_yds'] = p.receiving_yds
-        player['russing_att'] = p.rushing_att
-        player['rushing_yds'] = p.rushing_yds
-        player['rushing_loss_yds'] = p.rushing_loss_yds
-        player['rushing_tds'] = p.rushing_tds
+        player = addStats({}, p, 'RB')
         playerList.append(player)
     return makeResponse(playerList)
 
