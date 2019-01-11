@@ -34,6 +34,8 @@ def makeResponse(payload):
     data['Data'] = payload
     return json.dumps(data)
 
+def getStats():
+
 # Function for adding stats to a dictionary to keep code nice and clean
 # This will have dual use as it will make adding the individual routes way easier/cleaner
 def addStats(dict, stats, pos):
@@ -100,14 +102,15 @@ def qb():
     players = nflgame.combine_game_stats(games)
     playerList = []
     for p in players.passing().sort('passing_yds').limit(int(count)):
-        player = addStats({}, p, 'QB')
+        player = addStats({'pos':'QB'}, p, 'QB')
         playerList.append(player)
     print(datetime.datetime.now())
     return makeResponse(playerList)
 
-# /players/WR/?count={count}&year={year}&week={week}
-@app.route('/players/WR/')
-def wr():
+# Deprecated ?
+# /players/rec/?count={count}&year={year}&week={week}
+@app.route('/players/rec/')
+def rec():
     count = request.args.get('count')
     year = request.args.get('year')
     week = request.args.get('week')
@@ -127,6 +130,51 @@ def wr():
         playerList.append(player)
     return makeResponse(playerList)
 
+# /players/WR/?count={count}&year={year}&week={week}
+@app.route('/players/WR/')
+def WR():
+    count = request.args.get('count')
+    year = request.args.get('year')
+    week = request.args.get('week')
+    if count is None:
+        count = 25
+    if year is None:
+        year = 2018
+    if week is not None:
+        week = int(week)
+    print(count, year, week)
+    games = nflgame.games(int(year), week=week)
+    players = nflgame.combine_game_stats(games)
+    playerList = []
+    for p in players.receiving().sort('receiving_yds').limit(int(count)):
+        if p.guess_position == 'WR':
+            player = addStats({'pos':'WR'}, p, 'WR')
+            playerList.append(player)
+    return makeResponse(playerList)
+
+# /players/TE/?count={count}&year={year}&week={week}
+@app.route('/players/TE/')
+def TE():
+    count = request.args.get('count')
+    year = request.args.get('year')
+    week = request.args.get('week')
+    if count is None:
+        count = 25
+    if year is None:
+        year = 2018
+    if week is not None:
+        week = int(week)
+    print(count, year, week)
+    games = nflgame.games(int(year), week=week)
+    players = nflgame.combine_game_stats(games)
+    playerList = []
+    for p in players.receiving().sort('receiving_yds').limit(int(count)):
+        # print(p.guess_position)
+        if p.guess_position == 'TE':
+            player = addStats({'pos':'TE'}, p, 'WR')
+            playerList.append(player)
+    return makeResponse(playerList)
+
 # /players/RB/?count={count}&year={year}&week={week}
 @app.route('/players/RB/')
 def rb():
@@ -144,7 +192,7 @@ def rb():
     players = nflgame.combine_game_stats(games)
     playerList = []
     for p in players.rushing().sort('rushing_yds').limit(int(count)):
-        player = addStats({}, p, 'RB')
+        player = addStats({'pos':'RB'}, p, 'RB')
         playerList.append(player)
     return makeResponse(playerList)
 
@@ -170,4 +218,4 @@ def player():
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    app.run(host=os.environ.get('HOST', '0.0.0.0'), port=port)
+    app.run(host=os.environ.get('HOST', '0.0.0.0'), port=port)  
