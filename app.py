@@ -5,8 +5,10 @@ import datetime
 import itertools
 
 from flask import Flask
+from flask_cors import CORS
 from flask import request
 app = Flask(__name__, instance_relative_config=True)
+CORS(app)
 
 def create_app(test_config=None):
     # create and configure the app
