@@ -97,7 +97,7 @@ def qb():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 25
+        count = 10
     if year is None:
         year = 2018
     if week is not None:
@@ -119,7 +119,7 @@ def rec():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 25
+        count = 10
     if year is None:
         year = 2018
     if week is not None:
@@ -141,7 +141,7 @@ def WR():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 25
+        count = 10
     if year is None:
         year = 2018
     if week is not None:
@@ -163,7 +163,7 @@ def TE():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 25
+        count = 10
     if year is None:
         year = 2018
     if week is not None:
@@ -186,7 +186,7 @@ def rb():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 25
+        count = 10
     if year is None:
         year = 2018
     if week is not None:
