@@ -81,13 +81,13 @@ def QB():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 10
+        count = 5
     if year is None:
         year = 2018
     if week is not None:
         week = int(week)
     def generate():
-        games = nflgame.games(int(year), week=1)
+        games = nflgame.games(int(year), week=week)
         players = nflgame.combine_game_stats(games)
         playerList = []
         for p in players.passing().sort('passing_yds').limit(int(count)):
@@ -103,7 +103,7 @@ def WR():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 10
+        count = 5
     if year is None:
         year = 2018
     if week is not None:
@@ -126,7 +126,7 @@ def TE():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 10
+        count = 5
     if year is None:
         year = 2018
     if week is not None:
@@ -149,7 +149,7 @@ def RB():
     year = request.args.get('year')
     week = request.args.get('week')
     if count is None:
-        count = 10
+        count = 5
     if year is None:
         year = 2018
     if week is not None:
