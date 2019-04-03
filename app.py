@@ -39,7 +39,7 @@ def makeResponse(payload):
 # Function for adding stats to a dictionary to keep code nice and clean
 # This will have dual use as it will make adding the individual routes way easier/cleaner
 def addStats(dict, stats, pos):
-    if stats.player.full_name:
+    try:
         if pos == 'QB':
             dict['player_name'] = stats.player.full_name
             dict['player_team'] = stats.team
@@ -72,8 +72,8 @@ def addStats(dict, stats, pos):
             dict['rushing_yds'] = stats.rushing_yds
             dict['rushing_loss_yds'] = stats.rushing_loss_yds
             dict['rushing_tds'] = stats.rushing_tds
-    else:
-        print("ASFDSDGADGSDFGSDGSDFGSDRGF")
+    except:
+        print("no full name")
     return dict
 
 # /players/QB/?count={count}&year={year}&week={week}
