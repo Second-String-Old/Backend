@@ -89,7 +89,6 @@ passing_attrs = ['passing_cmp', 'passing_att', 'passing_tds', 'passing_yds', 'pa
 # /players/QB/?count={count}&year={year}&week={week}
 @app.route('/players/QB/')
 def qb():
-    print(datetime.datetime.now())
     count = request.args.get('count')
     year = request.args.get('year')
     week = request.args.get('week')
@@ -105,7 +104,6 @@ def qb():
     for p in players.passing().sort('passing_yds').limit(int(count)):
         player = addStats({'pos':'QB'}, p, 'QB')
         playerList.append(player)
-    print(datetime.datetime.now())
     return makeResponse(playerList)
 
 # Deprecated ?
