@@ -209,10 +209,11 @@ def player():
     games = nflgame.games(int(year), week=week)
     players = nflgame.combine_game_stats(games)
     player = nflgame.find(name, team=team)[0]
-
     for x in players:
-        if x.name == player.gsis_name:
-            p = addStats(player.__dict__, x, player.position)
+        if x.player:
+            if x.player.full_name:
+                if x.player.full_name == player.full_name:
+                    p = addStats(player.__dict__, x, player.position)
     return makeResponse([p])
 
 if __name__ == "__main__":
