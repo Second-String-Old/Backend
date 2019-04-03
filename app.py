@@ -206,6 +206,8 @@ def player():
         year = 2018
     if week is not None:
         week = int(week)
+    name = 'Drew Brees'
+    team = 'NO'
     games = nflgame.games(int(year), week=week)
     players = nflgame.combine_game_stats(games)
     player = nflgame.find(name, team=team)[0]
