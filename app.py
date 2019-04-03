@@ -70,7 +70,7 @@ def addStats(dict, stats, pos):
         dict['receiving_tar'] = stats.receiving_tar
         dict['receiving_tds'] = stats.receiving_tds
         dict['receiving_yds'] = stats.receiving_yds
-        dict['russing_att'] = stats.rushing_att
+        dict['rushing_att'] = stats.rushing_att
         dict['rushing_yds'] = stats.rushing_yds
         dict['rushing_loss_yds'] = stats.rushing_loss_yds
         dict['rushing_tds'] = stats.rushing_tds
