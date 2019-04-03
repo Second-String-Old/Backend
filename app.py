@@ -36,10 +36,6 @@ def makeResponse(payload):
     data['Data'] = payload
     return json.dumps(data)
 
-# # Match players from nflgame stat aggregation to their NFL.com metadata
-# def getStats(player):
-#     print(nflgame.findID(player.playerid))
-
 # Function for adding stats to a dictionary to keep code nice and clean
 # This will have dual use as it will make adding the individual routes way easier/cleaner
 def addStats(dict, stats, pos):
@@ -219,7 +215,6 @@ def player():
     for x in players:
         if x.name == player.gsis_name:
             p = addStats(player.__dict__, x, player.position)
-            getStats(x)
     return makeResponse([p])
 
 if __name__ == "__main__":
