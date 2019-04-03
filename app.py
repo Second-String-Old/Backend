@@ -48,7 +48,7 @@ def addStats(dict, stats, pos):
         dict['passing_yds'] = stats.passing_yds
         dict['passing_int'] = stats.passing_int
         dict['passing_sk'] = stats.passing_sk
-        dict['russhing_att'] = stats.rushing_att
+        dict['rushing_att'] = stats.rushing_att
         dict['rushing_yds'] = stats.rushing_yds
     elif pos == 'WR':
         dict['player_name'] = stats.player.full_name
