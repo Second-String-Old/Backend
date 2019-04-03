@@ -87,7 +87,7 @@ def QB():
     if week is not None:
         week = int(week)
     def generate():
-        games = nflgame.games(int(year), week=week)
+        games = nflgame.games(int(year), week=1)
         players = nflgame.combine_game_stats(games)
         playerList = []
         for p in players.passing().sort('passing_yds').limit(int(count)):
@@ -109,7 +109,7 @@ def WR():
     if week is not None:
         week = int(week)
     def generate():
-        games = nflgame.games(int(year), week=week)
+        games = nflgame.games(int(year), week=1)
         players = nflgame.combine_game_stats(games)
         playerList = []
         for p in players.receiving().sort('receiving_yds').limit(int(count)):
@@ -132,7 +132,7 @@ def TE():
     if week is not None:
         week = int(week)
     def generate():
-        games = nflgame.games(int(year), week=week)
+        games = nflgame.games(int(year), week=1)
         players = nflgame.combine_game_stats(games)
         playerList = []
         for p in players.receiving().sort('receiving_yds').limit(int(count)):
@@ -155,7 +155,7 @@ def RB():
     if week is not None:
         week = int(week)
     def generate():
-        games = nflgame.games(int(year), week=week)
+        games = nflgame.games(int(year), week=1)
         players = nflgame.combine_game_stats(games)
         playerList = []
         for p in players.rushing().sort('rushing_yds').limit(int(count)):
@@ -176,7 +176,7 @@ def player():
     if week is not None:
         week = int(week)
     def generate():
-        games = nflgame.games(int(year), week=week)
+        games = nflgame.games(int(year), week=1)
         players = nflgame.combine_game_stats(games)
         player = nflgame.find(name, team=team)[0]
         for x in players:
