@@ -63,6 +63,7 @@ def addStats(dict, stats, pos):
         dict['receiving_yds'] = stats.receiving_yds
         dict['russing_att'] = stats.rushing_att
         dict['rushing_yds'] = stats.rushing_yds
+        dict['rushing_tds'] = stats.rushing_tds
     elif pos == 'RB':
         dict['player_name'] = stats.name
         dict['player_team'] = stats.team
