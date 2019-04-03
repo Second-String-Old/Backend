@@ -39,38 +39,39 @@ def makeResponse(payload):
 # Function for adding stats to a dictionary to keep code nice and clean
 # This will have dual use as it will make adding the individual routes way easier/cleaner
 def addStats(dict, stats, pos):
-    if pos == 'QB':
-        dict['player_name'] = stats.player.full_name
-        dict['player_team'] = stats.team
-        dict['passing_cmp'] = stats.passing_cmp
-        dict['passing_att'] = stats.passing_att
-        dict['passing_tds'] = stats.passing_tds
-        dict['passing_yds'] = stats.passing_yds
-        dict['passing_int'] = stats.passing_int
-        dict['passing_sk'] = stats.passing_sk
-        dict['rushing_att'] = stats.rushing_att
-        dict['rushing_yds'] = stats.rushing_yds
-    elif pos == 'WR':
-        dict['player_name'] = stats.player.full_name
-        dict['player_team'] = stats.team
-        dict['receiving_rec'] = stats.receiving_rec
-        dict['receiving_tar'] = stats.receiving_tar
-        dict['receiving_tds'] = stats.receiving_tds
-        dict['receiving_yds'] = stats.receiving_yds
-        dict['rushing_att'] = stats.rushing_att
-        dict['rushing_yds'] = stats.rushing_yds
-        dict['rushing_tds'] = stats.rushing_tds
-    elif pos == 'RB':
-        dict['player_name'] = stats.player.full_name
-        dict['player_team'] = stats.team
-        dict['receiving_rec'] = stats.receiving_rec
-        dict['receiving_tar'] = stats.receiving_tar
-        dict['receiving_tds'] = stats.receiving_tds
-        dict['receiving_yds'] = stats.receiving_yds
-        dict['rushing_att'] = stats.rushing_att
-        dict['rushing_yds'] = stats.rushing_yds
-        dict['rushing_loss_yds'] = stats.rushing_loss_yds
-        dict['rushing_tds'] = stats.rushing_tds
+    if stats.player.full_name:
+        if pos == 'QB':
+            dict['player_name'] = stats.player.full_name
+            dict['player_team'] = stats.team
+            dict['passing_cmp'] = stats.passing_cmp
+            dict['passing_att'] = stats.passing_att
+            dict['passing_tds'] = stats.passing_tds
+            dict['passing_yds'] = stats.passing_yds
+            dict['passing_int'] = stats.passing_int
+            dict['passing_sk'] = stats.passing_sk
+            dict['rushing_att'] = stats.rushing_att
+            dict['rushing_yds'] = stats.rushing_yds
+        elif pos == 'WR':
+            dict['player_name'] = stats.player.full_name
+            dict['player_team'] = stats.team
+            dict['receiving_rec'] = stats.receiving_rec
+            dict['receiving_tar'] = stats.receiving_tar
+            dict['receiving_tds'] = stats.receiving_tds
+            dict['receiving_yds'] = stats.receiving_yds
+            dict['rushing_att'] = stats.rushing_att
+            dict['rushing_yds'] = stats.rushing_yds
+            dict['rushing_tds'] = stats.rushing_tds
+        elif pos == 'RB':
+            dict['player_name'] = stats.player.full_name
+            dict['player_team'] = stats.team
+            dict['receiving_rec'] = stats.receiving_rec
+            dict['receiving_tar'] = stats.receiving_tar
+            dict['receiving_tds'] = stats.receiving_tds
+            dict['receiving_yds'] = stats.receiving_yds
+            dict['rushing_att'] = stats.rushing_att
+            dict['rushing_yds'] = stats.rushing_yds
+            dict['rushing_loss_yds'] = stats.rushing_loss_yds
+            dict['rushing_tds'] = stats.rushing_tds
     return dict
 
 # a simple response that returns top 5 rushing yards
