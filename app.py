@@ -95,7 +95,7 @@ def QB():
         playerList = []
         for p in players.passing().sort('passing_yds').limit(int(count)):
             player = addStats({'pos':'QB'}, p, 'QB')
-            if player not None:
+            if player is not None:
                 playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
@@ -119,7 +119,7 @@ def WR():
         for p in players.receiving().sort('receiving_yds').limit(int(count)):
             if p.guess_position == 'WR':
                 player = addStats({'pos':'WR'}, p, 'WR')
-                if player not None:
+                if player is not None:
                     playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
@@ -143,7 +143,7 @@ def TE():
         for p in players.receiving().sort('receiving_yds').limit(int(count)):
             if p.guess_position == 'TE':
                 player = addStats({'pos':'TE'}, p, 'WR')
-                if player not None:
+                if player is not None:
                     playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
@@ -166,7 +166,7 @@ def RB():
         playerList = []
         for p in players.rushing().sort('rushing_yds').limit(int(count)):
             player = addStats({'pos':'RB'}, p, 'RB')
-            if player not None:
+            if player is not None:
                 playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
@@ -191,7 +191,7 @@ def player():
                 if x.player.full_name:
                     if x.player.full_name == player.full_name:
                         p = addStats(player.__dict__, x, player.position)
-                        if p not None:
+                        if p is not None:
                             yield makeResponse([p])
                         break
     return Response(generate())
