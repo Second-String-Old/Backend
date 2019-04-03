@@ -3,6 +3,7 @@ import nflgame
 import json
 import datetime
 import itertools
+import time
 
 from flask import Flask
 from flask_cors import CORS
@@ -138,6 +139,7 @@ def rec():
 # /players/WR/?count={count}&year={year}&week={week}
 @app.route('/players/WR/')
 def WR():
+    start = time.time()
     count = request.args.get('count')
     year = request.args.get('year')
     week = request.args.get('week')
@@ -149,12 +151,18 @@ def WR():
         week = int(week)
     print(count, year, week)
     games = nflgame.games(int(year), week=week)
+    t1 = time.time()
+    print('T1: ', t1-start)
     players = nflgame.combine_game_stats(games)
+    t2 = time.time()
+    print('T2: ', t2-t1)
     playerList = []
     for p in players.receiving().sort('receiving_yds').limit(int(count)):
         if p.guess_position == 'WR':
             player = addStats({'pos':'WR'}, p, 'WR')
             playerList.append(player)
+    t3 = time.time()
+    print('T3: ', t3-t2)
     return makeResponse(playerList)
 
 # /players/TE/?count={count}&year={year}&week={week}
