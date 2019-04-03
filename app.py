@@ -72,7 +72,7 @@ def addStats(dict, stats, pos):
             dict['rushing_yds'] = stats.rushing_yds
             dict['rushing_loss_yds'] = stats.rushing_loss_yds
             dict['rushing_tds'] = stats.rushing_tds
-    return dict]
+    return dict
 
 # /players/QB/?count={count}&year={year}&week={week}
 @app.route('/players/QB/')
