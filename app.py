@@ -72,9 +72,10 @@ def addStats(dict, stats, pos):
             dict['rushing_yds'] = stats.rushing_yds
             dict['rushing_loss_yds'] = stats.rushing_loss_yds
             dict['rushing_tds'] = stats.rushing_tds
+        return dict
     except:
-        print("no full name")
-    return dict
+        print(stats.player)
+        return None
 
 # /players/QB/?count={count}&year={year}&week={week}
 @app.route('/players/QB/')
@@ -94,7 +95,8 @@ def QB():
         playerList = []
         for p in players.passing().sort('passing_yds').limit(int(count)):
             player = addStats({'pos':'QB'}, p, 'QB')
-            playerList.append(player)
+            if player not None:
+                playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
 
@@ -117,7 +119,8 @@ def WR():
         for p in players.receiving().sort('receiving_yds').limit(int(count)):
             if p.guess_position == 'WR':
                 player = addStats({'pos':'WR'}, p, 'WR')
-                playerList.append(player)
+                if player not None:
+                    playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
 
@@ -140,7 +143,8 @@ def TE():
         for p in players.receiving().sort('receiving_yds').limit(int(count)):
             if p.guess_position == 'TE':
                 player = addStats({'pos':'TE'}, p, 'WR')
-                playerList.append(player)
+                if player not None:
+                    playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
 
@@ -162,7 +166,8 @@ def RB():
         playerList = []
         for p in players.rushing().sort('rushing_yds').limit(int(count)):
             player = addStats({'pos':'RB'}, p, 'RB')
-            playerList.append(player)
+            if player not None:
+                playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
 
@@ -186,7 +191,8 @@ def player():
                 if x.player.full_name:
                     if x.player.full_name == player.full_name:
                         p = addStats(player.__dict__, x, player.position)
-                        yield makeResponse([p])
+                        if p not None:
+                            yield makeResponse([p])
                         break
     return Response(generate())
 
