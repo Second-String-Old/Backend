@@ -72,20 +72,7 @@ def addStats(dict, stats, pos):
             dict['rushing_yds'] = stats.rushing_yds
             dict['rushing_loss_yds'] = stats.rushing_loss_yds
             dict['rushing_tds'] = stats.rushing_tds
-    return dict
-
-# a simple response that returns top 5 rushing yards
-@app.route('/players/test/')
-def test():
-    games = nflgame.games(2018, week=5)
-    players = nflgame.combine_game_stats(games)
-    testPL = []
-    for p in players.rushing().sort('rushing_yds').limit(25):
-        msg = '%s %d carries for %d yards and %d TDs'
-        testPL.append(msg % (p, p.rushing_att, p.rushing_yds, p.rushing_tds))
-    return makeResponse(testPL)
-
-passing_attrs = ['passing_cmp', 'passing_att', 'passing_tds', 'passing_yds', 'passing_int', 'passing_sk']
+    return dict]
 
 # /players/QB/?count={count}&year={year}&week={week}
 @app.route('/players/QB/')
@@ -108,29 +95,6 @@ def QB():
             playerList.append(player)
         yield makeResponse(playerList)
     return Response(generate())
-
-# Deprecated ?
-# /players/rec/?count={count}&year={year}&week={week}
-@app.route('/players/rec/')
-def rec():
-    count = request.args.get('count')
-    year = request.args.get('year')
-    week = request.args.get('week')
-    if count is None:
-        count = 10
-    if year is None:
-        year = 2018
-    if week is not None:
-        week = int(week)
-    print(count, year, week)
-    games = nflgame.games(int(year), week=week)
-    players = nflgame.combine_game_stats(games)
-    playerList = []
-    for p in players.receiving().sort('receiving_yds').limit(int(count)):
-        # print(p.guess_position)
-        player = addStats({}, p, 'WR')
-        playerList.append(player)
-    return makeResponse(playerList)
 
 # /players/WR/?count={count}&year={year}&week={week}
 @app.route('/players/WR/')
