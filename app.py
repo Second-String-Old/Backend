@@ -36,6 +36,12 @@ def makeResponse(payload):
     data['Data'] = payload
     return json.dumps(data)
 
+def fillBlanks(dict):
+    for x in dict:
+        if x is None:
+            dict[x] = 0
+    return dict
+
 # Function for adding stats to a dictionary to keep code nice and clean
 # This will have dual use as it will make adding the individual routes way easier/cleaner
 def addStats(dict, stats, pos):
@@ -51,6 +57,7 @@ def addStats(dict, stats, pos):
             dict['passing_sk'] = stats.passing_sk
             dict['rushing_att'] = stats.rushing_att
             dict['rushing_yds'] = stats.rushing_yds
+            dict['rushing_tds'] = stats.rushing_tds
         elif pos == 'WR':
             dict['player_name'] = stats.player.full_name
             dict['player_team'] = stats.team
@@ -192,6 +199,7 @@ def player():
                     if x.player.full_name == player.full_name:
                         p = addStats(player.__dict__, x, player.position)
                         if p is not None:
+                            p = fillBlanks(p)
                             yield makeResponse([p])
                         break
     return Response(generate())
