@@ -1,4 +1,4 @@
 Flask
 gunicorn
-git+https://github.com/cwilliamson226/nflGame2018Fix.git
+git+https://github.com/cwilliamson226/nflgame.git
 flask-cors
