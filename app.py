@@ -81,7 +81,7 @@ def addStats(dict, stats, pos):
             dict['rushing_tds'] = stats.rushing_tds
         return dict
     except:
-        print(stats.player)
+        raise Exception('AddStats failed on player ', stats)
         return None
 
 # /players/QB/?count={count}&year={year}&week={week}
