@@ -1,6 +1,4 @@
 #!/bin/sh
-ls
-echo $PWD
-python update_sched.py
-python update_players.py
+nflgame-update-players
+nflgame-update-schedule
 python app.py
