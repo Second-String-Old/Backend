@@ -47,7 +47,7 @@ def fillBlanks(dict):
 def addStats(dict, stats, pos):
     try:
         if pos == 'QB':
-            dict['player_name'] = stats.name
+            dict['player_name'] = stats.player.full_name
             dict['player_team'] = stats.team
             dict['passing_cmp'] = stats.passing_cmp
             dict['passing_att'] = stats.passing_att
@@ -59,7 +59,7 @@ def addStats(dict, stats, pos):
             dict['rushing_yds'] = stats.rushing_yds
             dict['rushing_tds'] = stats.rushing_tds
         elif pos == 'WR':
-            dict['player_name'] = stats.name
+            dict['player_name'] = stats.player.full_name
             dict['player_team'] = stats.team
             dict['receiving_rec'] = stats.receiving_rec
             dict['receiving_tar'] = stats.receiving_tar
@@ -69,7 +69,7 @@ def addStats(dict, stats, pos):
             dict['rushing_yds'] = stats.rushing_yds
             dict['rushing_tds'] = stats.rushing_tds
         elif pos == 'RB':
-            dict['player_name'] = stats.name
+            dict['player_name'] = stats.player.full_name
             dict['player_team'] = stats.team
             dict['receiving_rec'] = stats.receiving_rec
             dict['receiving_tar'] = stats.receiving_tar
