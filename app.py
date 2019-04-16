@@ -170,7 +170,7 @@ def RB():
         week = int(week)
     def generate():
         print(datetime.datetime.now())
-        games = nflgame.games(int(year))
+        games = nflgame.games(int(year), week=10)
         print(datetime.datetime.now())
         players = nflgame.combine_game_stats(games)
         print(datetime.datetime.now())
