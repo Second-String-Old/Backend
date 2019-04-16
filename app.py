@@ -2,6 +2,7 @@ import os
 import nflgame
 import json
 import itertools
+import datetime
 
 from flask import Response
 from flask import Flask
@@ -168,13 +169,17 @@ def RB():
     if week is not None:
         week = int(week)
     def generate():
-        games = nflgame.games(int(year), week=1)
+        print(datetime.datetime.now())
+        games = nflgame.games(int(year))
+        print(datetime.datetime.now())
         players = nflgame.combine_game_stats(games)
+        print(datetime.datetime.now())
         playerList = []
         for p in players.rushing().sort('rushing_yds').limit(int(count)):
             player = addStats({'pos':'RB'}, p, 'RB')
             if player is not None:
                 playerList.append(player)
+        print(datetime.datetime.now())        
         yield makeResponse(playerList)
     return Response(generate())
 
